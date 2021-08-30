@@ -19,10 +19,11 @@ class ImageWidgetApp extends StatefulWidget {
 class _ImageWidgetAppState extends State<ImageWidgetApp> {
 
   String sum = '';
-  TextEditingController value = new TextEditingController();
-  TextEditingController value2 = new TextEditingController();
+  TextEditingController value =  TextEditingController();
+  TextEditingController value2 =  TextEditingController();
 
   List _buttonList = ['더하기','빼기','곱하기','나누기'];
+  // List<DropdownMenuItem<String>> _dropDownItems = [];
   List<DropdownMenuItem<String>> _dropDownItems = [];
   String? _buttonText;
   bool test = false; //이놈으로 술값계산인지 검사
@@ -36,12 +37,14 @@ class _ImageWidgetAppState extends State<ImageWidgetApp> {
       _dropDownItems.add(DropdownMenuItem(value: item, child: Text(item),));
       print('들어간후 -dropDownItems : $_dropDownItems');
     }
+
     _buttonText = _dropDownItems[0].value;
 
   }
 
   @override
   Widget build(BuildContext context) {
+    print('_dropDownItems = ${_dropDownItems[0].value}');
     Logger().d('####### value : $value');
     return Scaffold(
       drawer: Drawer(),
@@ -82,7 +85,13 @@ class _ImageWidgetAppState extends State<ImageWidgetApp> {
                   padding: const EdgeInsets.only(left: 30, right: 30),
                   child: RaisedButton(
                       child: Row(
-                        children: [Text('더하기'), Icon(Icons.add)],
+                        children: [Text('$_buttonText'),
+                          //'더하기','빼기','곱하기','나누기'
+                          _buttonText == '더하기' ? Icon(Icons.add) :
+                              _buttonText == '빼기' ? Icon(Icons.remove) :
+                              _buttonText == '곱하기' ? Icon(Icons.clear) :
+                              Icon(Icons.all_inclusive)
+                        ],
                         mainAxisAlignment: MainAxisAlignment.center,
                       ),
                       color: Colors.amberAccent,
@@ -90,9 +99,22 @@ class _ImageWidgetAppState extends State<ImageWidgetApp> {
                         Logger().d('##### Button Click');
 
                         setState(() {
-                          int result  = int.parse(value.text) + int.parse(value2.text);
-                          sum = '$result';
-                          Logger().d('###### sum = $sum');
+                              var value1Int = double.parse(value.value.text);
+                              var value2Int = double.parse(value2.value.text);
+                              var result;
+                              if(_buttonText == '더하기'){
+                                //  List _buttonList = ['더하기','빼기','곱하기','나누기'];
+                                result = value1Int + value2Int;
+                              }else if(_buttonText == '빼기'){
+                                result = value1Int - value2Int;
+                              }else if(_buttonText == '곱하기'){
+                                result = value1Int * value2Int;
+                              }else {
+                                result = value1Int / value2Int;
+                              }
+                              print('result = $result');
+                              sum = result.toString();
+
                         });
                       }),
                 ),
@@ -105,10 +127,18 @@ class _ImageWidgetAppState extends State<ImageWidgetApp> {
                 ),
               ),
 
-             DropdownButton(items: _dropDownItems, onChanged: (value){
+             DropdownButton(items: _dropDownItems, onChanged: (value){  
+               print('옴');
                setState(() {
+                 print('value = $value');
+                 print('_buttonText = $_buttonText');
                  _buttonText = value as String?;
+                 this.value = new TextEditingController();
+                 this.value2 = new TextEditingController();
+                 sum = '';
+
                });
+                    //onChaneged에서값을 바꾼가 (보이는곳)
              }, value: _buttonText,),
 
             ],
