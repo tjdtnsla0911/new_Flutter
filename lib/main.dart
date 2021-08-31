@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'image_font_add_app.dart';
-
+import 'package:logger/logger.dart';
+import 'package:start_app/firstPage.dart';
+import 'package:start_app/secondPage.dart';
 void main() {
   runApp(MyApp());
 }
@@ -18,42 +19,56 @@ class MyApp extends StatelessWidget {
           //플로씽액션버튼까지 쳐먹네 이게
           ),
       darkTheme: ThemeData.light(),
-      home: ImageWidgetApp(),
+      home: _MyHomePage(),
     );
   }
 }
 
-class MyApps extends StatefulWidget {
-  @override
-  _MyAppsState createState() => _MyAppsState();
-}
+class _MyHomePage extends StatefulWidget {
 
-class _MyAppsState extends State<MyApps> {
+  // const _MyHomePage({Key key}) : super(key: key);
+
+  @override
+  __MyHomePageState createState() => __MyHomePageState();
+}
+//with는 여러 클래스를 재사용할수있는 편리한 키워드..
+class __MyHomePageState extends State<_MyHomePage> with SingleTickerProviderStateMixin{
+  TabController? controller;
+
+  @override
+  void initState() {
+    super.initState();
+    ///vsync는 탭이 이동했을때 호출되는 콜백함수를 어디서 처리할지 지정한다
+    //그냥 박을시 error가 터진다. 탭컨트롤러는 여러화면을 이동하는 역할을 하므로, 기본적으로 애니메이션을 사용하는데
+    //this가 가르키는 _MySyate에는 아무것도없어서 그렇다
+
+    controller = TabController(length: 2, vsync: this);
+    Logger().d('###### controller : $controller');
+  }
+
+  @override
+  void dispose() {
+    print('######## dispose에옴');
+    controller!.dispose();
+    super.dispose();
+    print('######## dispose에끝');
+  }
+
   @override
   Widget build(BuildContext context) {
-    print('build 시작');
     return Scaffold(
       appBar: AppBar(
-        title: Text('Material Design App'),
-        backgroundColor: Colors.cyan,
+        title: Text('태바')
       ),
+      body: TabBarView(
+        children: <Widget>[FirstApp(),SeconApp()],
+        controller: controller,
+      ),
+      bottomNavigationBar: TabBar(tabs: <Tab>[
+        Tab(icon: Icon(Icons.looks_one, color: Colors.blueAccent,),),
+        Tab(icon: Icon(Icons.looks_two,color: Colors.blueGrey,),)
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
-      ),
-
-      body: Container(
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Icon(Icons.android),
-              Text('반갑다'),
-            ],
-            mainAxisAlignment: MainAxisAlignment.center,
-          ),
-        ),
-      ),
+      ],controller: controller,),
     );
   }
 }
