@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
+import 'animelitem.dart';
 
 class FirstApp extends StatelessWidget {
-  const FirstApp({Key? key}) : super(key: key);
+
+  final List<Animal>? list;
+
+  const FirstApp({Key? key, this.list}) : super(key: key); //생성자
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         child: Center(
-          child: Text('오기석면상'),
+          child: ListView.builder(itemBuilder: (context,position){
+              print('context = $context');
+              print('position = $position');
+              return Card(
+
+              );
+
+          }),
         ),
       ),
     );
