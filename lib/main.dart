@@ -3,11 +3,13 @@ import 'package:logger/logger.dart';
 import 'package:start_app/firstPage.dart';
 import 'package:start_app/secondPage.dart';
 import './animelitem.dart';
+
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   var switchvalue = false;
 
   @override
@@ -26,7 +28,6 @@ class MyApp extends StatelessWidget {
 }
 
 class _MyHomePage extends StatefulWidget {
-
   // const _MyHomePage({Key key}) : super(key: key);
   @override
   __MyHomePageState createState() => __MyHomePageState();
@@ -39,7 +40,8 @@ class __MyHomePageState extends State<_MyHomePage> with SingleTickerProviderStat
   List<Animal>? animalList = [];
 
   @override
-  void initState() {
+   void initState() {
+  print('initState실행');
     super.initState();
     ///vsync는 탭이 이동했을때 호출되는 콜백함수를 어디서 처리할지 지정한다
     //그냥 박을시 error가 터진다. 탭컨트롤러는 여러화면을 이동하는 역할을 하므로, 기본적으로 애니메이션을 사용하는데
@@ -47,10 +49,20 @@ class __MyHomePageState extends State<_MyHomePage> with SingleTickerProviderStat
     controller = TabController(length: 2, vsync: this);
     Logger().d('###### controller : $controller');
     print('initState맨첨에 시작해서 animalList = $animalList');
-    /*
-
-    * */
-    animalList!.add(Animal(animalname: '리엑트',kind: '깃허브',imagepath: '/image/github.png'));
+    animalList!.add(Animal(animalname: '깃허브',kind: '깃허브',imagepath: 'image/github.png'));
+    animalList!.add(Animal(animalname: '깃허브',kind: '깃허브',imagepath: 'image/github.png'));
+  animalList!.add(Animal(animalname: '깃허브',kind: '깃허브',imagepath: 'image/github.png'));
+  animalList!.add(Animal(animalname: '깃허브',kind: '깃허브',imagepath: 'image/github.png'));
+  animalList!.add(Animal(animalname: '깃허브',kind: '깃허브',imagepath: 'image/github.png'));
+  animalList!.add(Animal(animalname: '깃허브',kind: '깃허브',imagepath: 'image/github.png'));
+  animalList!.add(Animal(animalname: '깃허브',kind: '깃허브',imagepath: 'image/github.png'));
+  animalList!.add(Animal(animalname: '깃허브',kind: '깃허브',imagepath: 'image/github.png'));
+  animalList!.add(Animal(animalname: '깃허브',kind: '깃허브',imagepath: 'image/github.png'));
+  animalList!.add(Animal(animalname: '깃허브',kind: '깃허브',imagepath: 'image/github.png'));
+  animalList!.add(Animal(animalname: '깃허브',kind: '깃허브',imagepath: 'image/github.png'));
+  animalList!.add(Animal(animalname: '깃허브',kind: '깃허브',imagepath: 'image/github.png'));
+  animalList!.add(Animal(animalname: '깃허브',kind: '깃허브',imagepath: 'image/github.png'));
+  animalList!.add(Animal(animalname: '깃허브',kind: '깃허브',imagepath: 'image/github.png'));
     print('animalList = ${animalList.toString()}');
 
   }
